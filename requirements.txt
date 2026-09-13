@@ -1,0 +1,13 @@
+# 1.63 is the version this UI is built and verified against: it needs
+# st.iframe, `key=` on layout containers (the .st-key-* CSS hook) and the
+# width="stretch" API. Older releases will raise on those.
+streamlit>=1.63
+deepforest>=1.4.0
+rasterio>=1.3
+geopandas>=0.14
+shapely>=2.0
+pyproj>=3.6
+pandas>=2.0
+numpy>=1.26
+pillow>=10.0
+matplotlib>=3.8
