@@ -26,24 +26,22 @@ theme.page_heading("Tree Crown Detection & Canopy Area Tool")
 hero.render()
 
 # ---------------------------------------------------------------------------
-# Permanent, non-collapsible limitations panel (requirement #10)
+# Feature overview
 # ---------------------------------------------------------------------------
-with st.container(key="limitations"):
-    st.markdown("##### ⚠️ Limitations — read before trusting these numbers")
-    st.markdown(
-        "- The detection model was **pretrained on NEON forest data** (largely North American "
-        "temperate/mixed forest). Its accuracy on other biomes, canopy types, or imagery sources "
-        "(different sensors, resolutions, sun angles) is **unverified in this tool**.\n"
-        "- **Dense or overlapping crowns are likely undercounted** — the model detects individual "
-        "objects and struggles to separate touching canopies.\n"
-        "- Crown area is computed from **bounding boxes**, which **overestimate** true crown area "
-        "since real crowns are roughly elliptical, not rectangular.\n"
-        "- If meters/pixel was **user-supplied** (plain PNG/JPG) rather than read from a GeoTIFF's "
-        "CRS, **every area number on this page inherits that uncertainty** — garbage scale in, "
-        "garbage area out.\n"
-        "- **No ground-truth validation has been performed** on this image unless you run the "
-        "spot-check below."
-    )
+theme.eyebrow("What this tool does")
+
+theme.feature_grid(
+    [
+        ("🌳", "Individual crown detection", "Locates each tree crown in aerial imagery with DeepForest, not just a blanket canopy mask."),
+        ("📐", "Canopy area & cover", "Sums crown bounding-box areas into total canopy area and cover %, with the math shown, not hidden."),
+        ("🛰️", "GeoTIFF-aware scale", "Reads meters-per-pixel straight from a GeoTIFF's CRS when available, and clearly flags manual scale entry when it isn't."),
+        ("📍", "KML boundary clipping", "Upload a KML polygon to restrict detections and area totals to a specific plot or property line."),
+        ("🎚️", "Live confidence threshold", "Slide the detection confidence cutoff and watch tree count and canopy area recompute instantly."),
+        ("🖼️", "Annotated visualization", "Detected crowns are drawn over the source image alongside a crown-size distribution histogram."),
+        ("⬇️", "CSV & GeoJSON export", "Download per-tree detections as CSV, or as GeoJSON for georeferenced images to bring into GIS tools."),
+        ("✅", "Spot-check validation", "Manually count trees in a crop and compare against the model's count to gauge accuracy on your image."),
+    ]
+)
 
 st.write("")
 

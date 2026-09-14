@@ -3,7 +3,9 @@ __pycache__/
 .venv/
 venv/
 .streamlit/secrets.toml
+lightning_logs/
 *.tif
 *.tiff
 *.kml
+!sample_data/*.tif
 !sample_data/*.kml

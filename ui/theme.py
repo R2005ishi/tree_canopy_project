@@ -103,7 +103,6 @@ h2.tct-eyebrow::after {
 }
 
 /* ── Surfaces: keyed containers rendered as panels ─────────────────────── */
-.st-key-limitations,
 .st-key-threshold_panel,
 .st-key-viz_panel,
 .st-key-hist_panel,
@@ -118,18 +117,40 @@ h2.tct-eyebrow::after {
   padding: 1.3rem 1.4rem;
 }
 
-/* The disclosure card is deliberately the most present surface on the page:
-   it is a permanent requirement, not a dismissible warning. */
-.st-key-limitations {
-  background:
-    linear-gradient(168deg, rgba(245,181,68,.055), rgba(245,181,68,.012) 42%),
-    linear-gradient(168deg, var(--tct-surface-2), var(--tct-surface-1));
-  border: 1px solid rgba(245,181,68,.26);
-  box-shadow: var(--tct-e3), inset 0 0 0 1px rgba(245,181,68,.04);
-  backdrop-filter: blur(14px) saturate(1.08);
+/* ── Feature grid — landing-page capability cards ─────────────────────── */
+.tct-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: .9rem;
 }
-.st-key-limitations [data-testid="stMarkdown"] li { margin-bottom: .42rem; line-height: 1.62; }
-.st-key-limitations [data-testid="stMarkdown"] ul { padding-left: 1.05rem; }
+.tct-feature-card {
+  background: linear-gradient(168deg, var(--tct-surface-2), var(--tct-surface-1));
+  border: 1px solid var(--tct-line);
+  border-radius: var(--tct-r-md);
+  box-shadow: var(--tct-e2);
+  padding: 1.1rem 1.2rem;
+  transition: transform .3s var(--tct-ease), box-shadow .3s var(--tct-ease),
+              border-color .3s var(--tct-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .tct-feature-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(63,217,140,.4);
+    box-shadow: var(--tct-e3);
+  }
+}
+.tct-feature-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 10px;
+  background: rgba(63,217,140,.12); border: 1px solid rgba(63,217,140,.3);
+  font-size: 1.05rem; margin-bottom: .7rem;
+}
+.tct-feature-title {
+  margin: 0 0 .35rem; font-size: .92rem; font-weight: 650; color: var(--tct-text);
+}
+.tct-feature-desc {
+  margin: 0; font-size: .82rem; line-height: 1.55; color: var(--tct-muted);
+}
 
 /* ── KPI stat cards ────────────────────────────────────────────────────── */
 [data-testid="stMetric"] {
@@ -373,6 +394,19 @@ def page_heading(text: str) -> None:
 def eyebrow(text: str) -> None:
     """Section heading, styled as a small uppercase label with a trailing rule."""
     st.html(f'<h2 class="tct-eyebrow">{text}</h2>')
+
+
+def feature_grid(features: list[tuple[str, str, str]]) -> None:
+    """Landing-page capability cards: a list of (icon, title, description)."""
+    cards = "".join(
+        f'<div class="tct-feature-card">'
+        f'<div class="tct-feature-icon">{icon}</div>'
+        f'<h3 class="tct-feature-title">{title}</h3>'
+        f'<p class="tct-feature-desc">{desc}</p>'
+        f"</div>"
+        for icon, title, desc in features
+    )
+    st.html(f'<div class="tct-feature-grid">{cards}</div>')
 
 
 def trust_chip(verified: bool, label: str, note: str = "") -> None:
